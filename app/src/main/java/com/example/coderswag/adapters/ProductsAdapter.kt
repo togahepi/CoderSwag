@@ -10,10 +10,10 @@ import android.widget.TextView
 import com.example.coderswag.R
 import com.example.coderswag.model.Product
 
-class ProductsAdapter(val context: Context, val products: List<Product>) : RecyclerView.Adapter<ProductsAdapter.ProductHolder>() {
+class ProductsAdapter(val context: Context, val products: List<Product>, val itemClick: (Product) -> Unit) : RecyclerView.Adapter<ProductsAdapter.ProductHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): ProductHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.product_list_items,parent,false)
-        return ProductHolder(view)
+        return ProductHolder(view, itemClick)
     }
 
     override fun getItemCount(): Int {
@@ -24,16 +24,17 @@ class ProductsAdapter(val context: Context, val products: List<Product>) : Recyc
         holder.bindProduct(products[position], context)
     }
 
-    inner class ProductHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ProductHolder(itemView: View, val itemClick: (Product) -> Unit) : RecyclerView.ViewHolder(itemView) {
         val productImage = itemView.findViewById<ImageView>(R.id.productImage)
         val productName = itemView.findViewById<TextView>(R.id.productName)
-        val productPrice = itemView.findViewById<TextView>(R.id.productPrice)
+        val productPrice = itemView.findViewById<TextView>(R.id.productPrice2)
 
         fun bindProduct(product: Product, context: Context) {
             val resourceId = context.resources.getIdentifier(product.image,"drawable",context.packageName)
             productImage.setImageResource(resourceId)
             productName.text = product.title
             productPrice.text = product.price
+            itemView.setOnClickListener { itemClick(product) }
         }
     }
 }
