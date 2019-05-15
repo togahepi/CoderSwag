@@ -12,8 +12,8 @@ import com.example.coderswag.model.Product
 
 class ProductsAdapter(val context: Context, val products: List<Product>, val itemClick: (Product) -> Unit) : RecyclerView.Adapter<ProductsAdapter.ProductHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): ProductHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.product_list_items,parent,false)
-        return ProductHolder(view, itemClick)
+        val views = LayoutInflater.from(context).inflate(R.layout.product_list_items,parent,false)
+        return ProductHolder(views, itemClick)
     }
 
     override fun getItemCount(): Int {
@@ -25,9 +25,9 @@ class ProductsAdapter(val context: Context, val products: List<Product>, val ite
     }
 
     inner class ProductHolder(itemView: View, val itemClick: (Product) -> Unit) : RecyclerView.ViewHolder(itemView) {
-        val productImage = itemView.findViewById<ImageView>(R.id.productImage)
-        val productName = itemView.findViewById<TextView>(R.id.productName)
-        val productPrice = itemView.findViewById<TextView>(R.id.productPrice2)
+        private val productImage = itemView.findViewById<ImageView>(R.id.productImage)
+        private val productName = itemView.findViewById<TextView>(R.id.productName)
+        private val productPrice = itemView.findViewById<TextView>(R.id.productPrice2)
 
         fun bindProduct(product: Product, context: Context) {
             val resourceId = context.resources.getIdentifier(product.image,"drawable",context.packageName)
